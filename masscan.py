@@ -30,7 +30,7 @@ class DisableLogger():
     def __exit__(self, exit_type, exit_value, exit_traceback):
        logging.disable(logging.NOTSET)
 
-def masscanScanProcess(host):
+def masscanProcess(host):
     try:
         port_list = []
         start_time = time.time()
@@ -55,14 +55,7 @@ def masscanScanProcess(host):
         execution_time = stop_time - start_time
         new_port_list = str(port_list)[1:-1]
         print('[*] MasScan execution time: %.4f' % execution_time + ' s')
-        python_nmap.func_nmapCompleteScan(host, new_port_list.replace(' ', ''))
-
+        return document, new_port_list
     except Exception as err:
         print('[*] ')
         print('[*] Exception while executing masscan: %s' % err)
-        python_nmap.func_nmapFastScanProcess(host)
-
-def masscanScan(host, **kwargs):
-    console = Console()
-    with console.status("[bold]MasScan and Nmap working...") as status:
-        masscanScanProcess(host)

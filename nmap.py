@@ -1,6 +1,5 @@
 import nmap
 import time
-from rich.console import Console
 
 def nmapFastScanProcess(host):
     try:
@@ -25,18 +24,11 @@ def nmapFastScanProcess(host):
         execution_time = stop_time - start_time
         new_port_list = str(port_list)[1:-1]
         print('[*] Nmap fast scan execution time: %.4f' % execution_time + ' s')
-        nmapCompleteScan(host, new_port_list.replace(' ', ''))
-        return document
-        
+        return document, new_port_list
     except Exception as err:
         print('[*] Exception while executing nmap: %s' % err)
 
-def nmapFastScan(host, port_list):
-    console = Console()
-    with console.status("[bold]MasScan and Nmap working...") as status:
-        nmapCompleteScan(host, port_list)
-
-def nmapCompleteScan(host, port_list):
+def nmapCompleteScanProcess(host, port_list):
     try:
         DefaultConfigTCP = '-p ' + port_list + ' -O -sT -sV -sC -A -T5'
         start_time = time.time()
@@ -67,16 +59,10 @@ def nmapCompleteScan(host, port_list):
         execution_time = stop_time - start_time
         print('[*] Nmap complete scan execution time: %.4f' % execution_time + ' s')
         return document
-        
     except Exception as err:
         print('[*] Exception while executing nmap: %s' % err)
 
-def nmapScan(host, port_list):
-    console = Console()
-    with console.status("[bold]MasScan and Nmap working...") as status:
-        nmapCompleteScan(host, port_list)
-
-def nmapCustomScan(host, custom_argument, port):
+def nmapCustomScanProcess(host, custom_argument, port):
     try:
         DefaultConfigTCP = '-p' + str(port) + ' ' + custom_argument
         return_dict = {
@@ -85,7 +71,7 @@ def nmapCustomScan(host, custom_argument, port):
         }
         return_dict['info']['port'] = port
         nmTCP = nmap.PortScanner()
-        nmTCP.scan(hosts = host, arguments = DefaultConfigTCP)
+        document = nmTCP.scan(hosts = host, arguments = DefaultConfigTCP)
 
         for host in nmTCP.all_hosts():
             for proto in nmTCP[host].all_protocols():
@@ -95,7 +81,6 @@ def nmapCustomScan(host, custom_argument, port):
                     for key in lkeys:
                         return_dict['info'][key] = nmTCP[host][proto][port][key]
 
-        return return_dict    
-            
+        return document, return_dict    
     except Exception as err:
         print('[*] Exception while executing nmap: %s' % err)
