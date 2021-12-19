@@ -13,16 +13,18 @@ def nmapFastScanProcess(host):
             print('[*] ')
             print('[*] Nmap:')
             print('[*] ----------------------------------------------------')
-            print('[*] Host : %s' % (host))
+            print('[*] IP : %s' % (host))
             for proto in nmTCP[host].all_protocols():
                 lport = nmTCP[host][proto].keys()
                 for port in lport:
                     if nmTCP[host][proto][port]['state'] == 'open':
-                        port_list.append(port)
+                        print('[*] port : %s\tstate : %s\t'% (port, nmTCP[host][proto][port]['state']))
+                        port_list.append(port)    
         
         stop_time = time.time()
         execution_time = stop_time - start_time
         new_port_list = str(port_list)[1:-1]
+        new_port_list = new_port_list.replace(' ', '')
         print('[*] Nmap fast scan execution time: %.4f' % execution_time + ' s')
         return document, new_port_list
     except Exception as err:
@@ -69,7 +71,6 @@ def nmapCustomScanProcess(host, custom_argument, port):
             'nmap': DefaultConfigTCP,
             'info': {}
         }
-        return_dict['info']['port'] = port
         nmTCP = nmap.PortScanner()
         document = nmTCP.scan(hosts = host, arguments = DefaultConfigTCP)
 
@@ -77,6 +78,7 @@ def nmapCustomScanProcess(host, custom_argument, port):
             for proto in nmTCP[host].all_protocols():
                 lport = nmTCP[host][proto].keys()
                 for port in lport:
+                    return_dict['info']['port'] = port
                     lkeys = nmTCP[host][proto][port].keys()
                     for key in lkeys:
                         return_dict['info'][key] = nmTCP[host][proto][port][key]

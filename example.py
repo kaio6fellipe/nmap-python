@@ -1,6 +1,13 @@
-import masscan
-import nmap
+import python_masscan
+import python_nmap
 
-host = '127.0.0.1'
+host = '192.168.0.120'
 
-scan = masscan.masscanScan(host)
+try:
+    scan_ms, port_list_ms = python_masscan.masscanProcess(host)
+    complete_scan = python_nmap.nmapCompleteScanProcess(host, port_list_ms)
+except:
+    scan_nm, port_list_nm = python_nmap.nmapFastScanProcess(host)
+    complete_scan = python_nmap.nmapCompleteScanProcess(host, port_list_nm)
+
+print(complete_scan)

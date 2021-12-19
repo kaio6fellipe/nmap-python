@@ -1,10 +1,8 @@
 import masscan
 import logging
-from rich.console import Console
 import time
 import netifaces as ni
 import os
-import nmap as python_nmap
 
 def get_interface_ip(interface):
     try:
@@ -43,7 +41,6 @@ def masscanProcess(host):
         print('[*] MasScan:')
         print('[*] ----------------------------------------------------')
         print("[*] IP: ", host)
-        print("[*] Masscan version:", scan.masscan_version)
         for proto in document['scan'][str(host)]:
             print('[*] Protocol : %s' % proto)
             lport = document['scan'][str(host)][proto].keys()
@@ -54,6 +51,7 @@ def masscanProcess(host):
         stop_time = time.time()
         execution_time = stop_time - start_time
         new_port_list = str(port_list)[1:-1]
+        new_port_list = new_port_list.replace(' ', '')
         print('[*] MasScan execution time: %.4f' % execution_time + ' s')
         return document, new_port_list
     except Exception as err:
