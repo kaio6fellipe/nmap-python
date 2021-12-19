@@ -1,7 +1,7 @@
 <a href="https://kaio6fellipe.github.io/"><img src="./images/back-home.png" alt="Home Page" width="50" height="58" style="filter: grayscale(100%)"></a> 
 
 # Information
-> An optimized way to use Masscan and Nmap with Python. I end up wasting a lot of time doing long and detailed scans with nmap, but in the end they were neeeded.
+> I end up wasting a lot of time doing long and detailed scans with nmap, but in the end they were neeeded.
 >
 > To get rid of this problem, I needed to be very accurate with what I was supposed to scan. A good way to speed up this process would be to extract a list of open ports and then scan these ports with the full scan.
 >
