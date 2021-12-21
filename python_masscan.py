@@ -36,8 +36,7 @@ def masscanProcess(host):
         scan = masscan.PortScanner()
         with DisableLogger():
             document = scan.scan(host, arguments='--max-rate 1000 --adapter-ip ' + str(src_ip))
-
-        print('[*] ')
+            
         print('[*] MasScan:')
         print('[*] ----------------------------------------------------')
         print("[*] IP: ", host)

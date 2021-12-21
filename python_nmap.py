@@ -10,7 +10,6 @@ def nmapFastScanProcess(host):
         document = nmTCP.scan(hosts = host, arguments = DefaultConfigTCP)
 
         for host in nmTCP.all_hosts():
-            print('[*] ')
             print('[*] Nmap:')
             print('[*] ----------------------------------------------------')
             print('[*] IP : %s' % (host))
@@ -38,7 +37,6 @@ def nmapCompleteScanProcess(host, port_list):
         document = nmTCP.scan(hosts = host, arguments = DefaultConfigTCP)
 
         for host in nmTCP.all_hosts():
-            print('[*] ')
             print('[*] Details:')
             print('[*] ----------------------------------------------------')
             print('[*] Hostname : %s' % (nmTCP[host].hostname()))
