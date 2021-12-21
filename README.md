@@ -69,7 +69,7 @@ except:
 # Printing the dictionary
 print(complete_scan)
 ```
-This example will generate the following output:
+This example will generate the following output after the scan that I did on the metasploitable machine:
 ```json
 {
    "this-json": "looks awesome..."
